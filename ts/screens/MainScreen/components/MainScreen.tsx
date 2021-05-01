@@ -27,6 +27,15 @@ const ProductContainer = styled.View`
     padding-bottom: 8px;
 `;
 
+const ImageContainer = styled.Image`
+    width: 84px;
+    height: 42px;
+    border-radius: 4px;
+    background-color: red;
+    margin-right: 10px;
+    margin-left: 10px;
+`
+
 const LoadMoreContainer = styled.View`
     padding: 10px;
     justify-content: center;
@@ -100,6 +109,9 @@ const MainScreen: FunctionComponent = () => {
             data={products}
             renderItem={({ item }: { item: Product }) => (
               <ProductContainer>
+                <ImageContainer
+                  source={{uri: item.img}}
+                />
                 <Typography>{item.name}</Typography>
               </ProductContainer>)
             }
