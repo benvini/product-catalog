@@ -42,7 +42,7 @@ const LoadMoreBtn = styled.TouchableOpacity`
     align-items: center;
 `;
 
-const MainScreen: FunctionComponent = () => {
+const ProductsCatalogScreen: FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const products = useSelector((state: AddProductState) => state.products);
@@ -114,4 +114,4 @@ const MainScreen: FunctionComponent = () => {
   );
 };
 
-export default MainScreen;
+export default ProductsCatalogScreen;
