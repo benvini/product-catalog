@@ -1,10 +1,11 @@
 import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
-import { Screen, Typography } from '../../../shared/components';
 import {useDispatch, useSelector} from 'react-redux';
-import {addProducts} from '../../../store/actions/products';
 import { FlatList, ActivityIndicator } from 'react-native';
-import Card from '../../../shared/components/Card';
 import styled from 'styled-components/native';
+
+import { Screen, Typography } from '../../../shared/components';
+import {addProducts} from '../../../store/actions/products';
+import Card from '../../../shared/components/Card';
 import {Product, AddProductState} from '../../../types';
 
 const TitleContainer = styled.View`
@@ -27,13 +28,14 @@ const ImageContainer = styled.Image`
     margin-left: 10px;
 `
 
-const LoadMoreContainer = styled.View`
+const ButtonContainer = styled.View`
     padding: 10px;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 `;
-const LoadMoreBtn = styled.TouchableOpacity`
+
+const Button = styled.TouchableOpacity`
     padding: 10px;
     background-color: #3f51b5;
     border-radius: 4px;
@@ -67,9 +69,9 @@ const ProductsCatalogScreen: FunctionComponent = () => {
 
   const loadMoreBtnWithActivityIndicator = () => {
     return (
-      <LoadMoreContainer>
+      <ButtonContainer>
         {!isLastPage &&
-          <LoadMoreBtn
+          <Button
             activeOpacity={0.9}
             onPress={onAddProducts}
           >
@@ -79,9 +81,9 @@ const ProductsCatalogScreen: FunctionComponent = () => {
                 color="white"
                 style={{ marginLeft: 8 }} />
             ) : null}
-          </LoadMoreBtn>
+          </Button>
         }
-      </LoadMoreContainer>
+      </ButtonContainer>
     );
   };
 
