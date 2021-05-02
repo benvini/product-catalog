@@ -7,20 +7,16 @@ import { Screen, Typography } from '../../../shared/components';
 import { addProducts } from '../../../store/actions/products';
 import Card from '../../../shared/components/Card';
 import { Product, AddProductState } from '../../../types';
-import { ScrollView } from 'react-native-gesture-handler';
-
-const TitleContainer = styled.View`
-  align-items: center;
-`
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 const ProductContainer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding-bottom: 8px;
-`;
+`
 
-const ImageContainer = styled.Image`
+const Image = styled.Image`
     width: 84px;
     height: 42px;
     border-radius: 4px;
@@ -91,18 +87,21 @@ const ProductsCatalogScreen: FunctionComponent = (props) => {
   return (
     <ScrollView>
       <Screen>
-        <ButtonContainer><Button onPress={() => props.navigation.navigate('ProductDetail')}><Typography>To Product Detail Screen</Typography></Button></ButtonContainer>
         {products ?
           <Card margin={20} padding={10} alignItems="center">
             <FlatList
               data={products}
               renderItem={({ item }: { item: Product }) => (
                 <ProductContainer>
-                  <ImageContainer
+                  <TouchableOpacity onPress={() => {props.navigation.navigate('ProductDetail')}}>
+                  <Image
+                    
                     source={{ uri: item.img }}
                   />
+                  </TouchableOpacity>
                   <Typography>{item.name}</Typography>
-                </ProductContainer>)
+                </ProductContainer>
+                )
               }
               keyExtractor={(item, index) => index.toString()}
               ListFooterComponent={loadMoreBtnWithActivityIndicator}
