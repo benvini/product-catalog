@@ -1,24 +1,15 @@
 import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
 import { Screen, Typography } from '../../../shared/components';
-import axios from 'axios';
+import {useDispatch, useSelector} from 'react-redux';
+import {addProducts} from '../../../store/actions/products';
 import { FlatList, ActivityIndicator } from 'react-native';
-import { apiHost } from '../../../../bin/config';
 import Card from '../../../shared/components/Card';
 import styled from 'styled-components/native';
+import {Product, AddProductState} from '../../../types';
 
-interface Product {
-  categoryName: string;
-  img: string;
-  imgBig: string;
-  id: number;
-  name: string;
-  isHealthy: boolean;
-  isNatran: boolean;
-  isSugar: boolean;
-  manufacturerName: string;
-  isShumanRavuy: boolean;
-  price: number;
-}
+const TitleContainer = styled.View`
+  align-items: center;
+`
 
 const ProductContainer = styled.View`
     flex-direction: column;
@@ -52,33 +43,27 @@ const LoadMoreBtn = styled.TouchableOpacity`
 `;
 
 const MainScreen: FunctionComponent = () => {
-  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isLastPage, setIsLastPage] = useState(false);
+  const dispatch = useDispatch();
+  const products = useSelector((state: AddProductState) => state.products);
+  const isLastPage = useSelector((state: AddProductState) => state.isLastPage);
 
   useEffect(() => { // fetch first 10 products on initial render
-    addProducts();
+    onAddProducts();
   }, []);
 
-  const addProducts = useCallback(async () => {
+  const onAddProducts = useCallback( () => {
     setIsLoading(true);
+    const productsLength = products.length;
+
     try {
-      const productsLength = products.length;
-      const productsToFetch = await axios.get(apiHost, {
-        params: { start: productsLength, end: (productsLength + 10) }
-      });
-      if (productsToFetch.data.length < 10) {
-        setIsLastPage(true);
-      }
+      dispatch(addProducts(productsLength));
       setIsLoading(false);
-      setProducts(products => {
-        return [...products, ...productsToFetch.data]
-      });
     }
     catch (e) {
-      console.log('err', e);
+      console.error('err', e); //add activity indicator
     }
-  }, [products]);
+  }, [addProducts, products]);
 
   const loadMoreBtnWithActivityIndicator = () => {
     return (
@@ -86,7 +71,7 @@ const MainScreen: FunctionComponent = () => {
         {!isLastPage &&
           <LoadMoreBtn
             activeOpacity={0.9}
-            onPress={addProducts}
+            onPress={onAddProducts}
           >
             <Typography>Load More</Typography>
             {isLoading ? (
@@ -102,7 +87,9 @@ const MainScreen: FunctionComponent = () => {
 
   return (
     <Screen>
-      <Typography>Test</Typography>
+      <TitleContainer>
+        <Typography>Products Catalog App</Typography>
+      </TitleContainer>
       {products ?
         <Card margin={20} padding={10} alignItems="center">
           <FlatList
