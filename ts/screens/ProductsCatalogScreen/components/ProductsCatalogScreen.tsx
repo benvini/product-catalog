@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FlatList, ActivityIndicator } from 'react-native';
 import styled from 'styled-components/native';
 
 import { Screen, Typography } from '../../../shared/components';
-import {addProducts} from '../../../store/actions/products';
+import { addProducts } from '../../../store/actions/products';
 import Card from '../../../shared/components/Card';
-import {Product, AddProductState} from '../../../types';
+import { Product, AddProductState } from '../../../types';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const TitleContainer = styled.View`
   align-items: center;
@@ -44,7 +45,7 @@ const Button = styled.TouchableOpacity`
     align-items: center;
 `;
 
-const ProductsCatalogScreen: FunctionComponent = () => {
+const ProductsCatalogScreen: FunctionComponent = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const products = useSelector((state: AddProductState) => state.products);
@@ -54,7 +55,7 @@ const ProductsCatalogScreen: FunctionComponent = () => {
     onAddProducts();
   }, []);
 
-  const onAddProducts = useCallback( () => {
+  const onAddProducts = useCallback(() => {
     setIsLoading(true);
     const productsLength = products.length;
 
@@ -88,31 +89,30 @@ const ProductsCatalogScreen: FunctionComponent = () => {
   };
 
   return (
-    <Screen>
-      <TitleContainer>
-        <Typography>Products Catalog App</Typography>
-      </TitleContainer>
-      {products ?
-        <Card margin={20} padding={10} alignItems="center">
-          <FlatList
-            data={products}
-            renderItem={({ item }: { item: Product }) => (
-              <ProductContainer>
-                <ImageContainer
-                  source={{uri: item.img}}
-                />
-                <Typography>{item.name}</Typography>
-              </ProductContainer>)
-            }
-            keyExtractor={(item, index) => index.toString()}
-            numColumns={1}
-            ListFooterComponent={loadMoreBtnWithActivityIndicator}
-          />
-        </Card>
-        :
-        <Typography>Loading products...</Typography>
-      }
-    </Screen>
+    <ScrollView>
+      <Screen>
+        <ButtonContainer><Button onPress={() => props.navigation.navigate('ProductDetail')}><Typography>To Product Detail Screen</Typography></Button></ButtonContainer>
+        {products ?
+          <Card margin={20} padding={10} alignItems="center">
+            <FlatList
+              data={products}
+              renderItem={({ item }: { item: Product }) => (
+                <ProductContainer>
+                  <ImageContainer
+                    source={{ uri: item.img }}
+                  />
+                  <Typography>{item.name}</Typography>
+                </ProductContainer>)
+              }
+              keyExtractor={(item, index) => index.toString()}
+              ListFooterComponent={loadMoreBtnWithActivityIndicator}
+            />
+          </Card>
+          :
+          <Typography>Loading products...</Typography>
+        }
+      </Screen>
+    </ScrollView>
   );
 };
 

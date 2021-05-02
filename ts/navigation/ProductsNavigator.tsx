@@ -22,7 +22,7 @@ const ProductsNavigator = () => {
   return (
     <ProductsStackNavigator.Navigator screenOptions={defaultNavOptions}>
       <ProductsStackNavigator.Screen
-        name="Main"
+        name="ProductsCatalog"
         component={ProductsCatalogScreen}
       />
       <ProductsStackNavigator.Screen
