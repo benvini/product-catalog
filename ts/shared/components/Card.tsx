@@ -1,5 +1,6 @@
 import React, {FunctionComponent, ReactNode} from 'react';
 import styled from 'styled-components/native';
+import dark from '../theme/dark';
 
 type Props = {
   margin?: number;
@@ -14,8 +15,7 @@ const CardContainer = styled.View<Props>`
   border-radius: 10px;
   ${({margin}) => margin && `margin: ${margin}px`};
   ${({padding}) => padding && `padding: ${padding}px`};
-  ${({alignItems}) => alignItems && `align-items: ${alignItems}`};
-  background-color: ${({theme}) => (theme.palette.backgroundColor === 'light' ? '#3f51b5' : '#8bc34a')};
+  background-color: ${({theme}) => (theme.palette.backgroundColor === dark.backgroundColor ? '#3f51b5' : '#8bc34a')};
 `;
 
 const Card: FunctionComponent<Props> = (props) => {
