@@ -85,7 +85,6 @@ const ProductsCatalogScreen: FunctionComponent = (props) => {
   };
 
   return (
-    <ScrollView>
       <Screen>
         {products ?
           <Card margin={20} padding={10} alignItems="center">
@@ -93,7 +92,7 @@ const ProductsCatalogScreen: FunctionComponent = (props) => {
               data={products}
               renderItem={({ item }: { item: Product }) => (
                 <ProductContainer>
-                  <TouchableOpacity onPress={() => {props.navigation.navigate('ProductDetail')}}>
+                  <TouchableOpacity onPress={() => {props.navigation.navigate('ProductDetail', {id: item.id})}}>
                   <Image
                     
                     source={{ uri: item.img }}
@@ -111,7 +110,6 @@ const ProductsCatalogScreen: FunctionComponent = (props) => {
           <Typography>Loading products...</Typography>
         }
       </Screen>
-    </ScrollView>
   );
 };
 

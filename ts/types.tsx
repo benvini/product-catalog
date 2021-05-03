@@ -3,10 +3,8 @@ import { AnyAction } from "redux";
 export interface Product {
     categoryName: string;
     img: string;
-    imgBig: string;
     id: number;
     name: string;
-    isHealthy: boolean;
     isNatran: boolean;
     isSugar: boolean;
     manufacturerName: string;
