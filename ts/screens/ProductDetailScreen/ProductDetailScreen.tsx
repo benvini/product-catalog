@@ -2,19 +2,12 @@ import React, { FunctionComponent, useCallback, useEffect, useState } from 'reac
 import styled from 'styled-components/native';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
-import { apiHost } from '../../../bin/config';
 
+import { apiHost } from '../../../bin/config';
 import Card from '../../shared/components/Card';
 import { Screen, Typography } from '../../shared/components';
-import { FlatList, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { Product } from '../../types';
 
-const ProductContainer = styled.View`
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`
 
 const Image = styled.Image`
     width: 84px;
@@ -25,18 +18,11 @@ const Image = styled.Image`
     margin-left: 10px;
 `
 
-const Button = styled.Button``
-const ButtonContainer = styled.View`
-    margin-top: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-`
-
 const ProductDetailScreen: FunctionComponent = () => {
     const [product, setProduct] = useState({});
 
     const route = useRoute();
-    const routeId = route.params.id || 0;
+    const routeId = route.params.id || 0; 
     useEffect(() => {
         try {
             axios.get(apiHost + routeId, { params: { id: routeId } }).then(fetchedProduct => {

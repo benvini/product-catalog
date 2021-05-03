@@ -1,12 +1,15 @@
 import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
+import axios from 'axios';
 
+
+import Spinner from '../../../shared/components/Spinner';
 import { Typography } from '../../../shared/components';
 import { addProducts } from '../../../store/actions/products';
 import { Product, AddProductState } from '../../../types';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import dark from '../../../shared/theme/dark';
+import { apiHost } from '../../../../bin/config';
 
 const Container = styled.SafeAreaView`
   align-items: center;
@@ -44,17 +47,8 @@ const Image = styled.Image`
     margin-left: 10px;
 `
 
-const ButtonContainer = styled.View`
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    margin-top: 8px;
-    margin-bottom: 8px;
-`;
-
 const Button = styled.TouchableOpacity`
     padding: 8px;
-    background-color: #3f51b5;
     border-radius: 4px;
 `;
 interface Props {
@@ -73,25 +67,39 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
     onAddProducts();
   }, []);
 
-  const onAddProducts = useCallback(() => {
+  useEffect(() => {
+    setIsLoading(false);
+  }, [products]);
+
+  const onAddProducts = useCallback(async () => {
     if (isLastPage) {
       return;
     }
     setIsLoading(true);
     const productsLength = products.length;
-
-    try {
-      dispatch(addProducts(productsLength));
-      setIsLoading(false);
-    }
+ try{
+    const fetchedProducts = await axios.get(apiHost, {
+      params: { start: productsLength, end: (productsLength + 10) }
+    });
+    setIsLoading(false);
+    dispatch(addProducts(fetchedProducts.data));
+ }
     catch (e) {
-      console.error('err', e); //add activity indicator
+      console.error('err', e); 
     }
   }, [addProducts, products]);
 
   const onProductDetail = useCallback((id) => {
     navigation.navigate('ProductDetail', { id })
   }, [])
+
+  const renderFooter = useCallback(() => {    
+    if (!isLoading) return null
+  
+    return (
+        <Spinner height={150}/>
+    )
+  }, [isLoading])
 
   return (
     <Container>
@@ -105,13 +113,14 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
             vertical={false}
             onEndReached={onAddProducts}
             contentContainerStyle={{paddingBottom: 12, paddingTop: 12}}
+            ListFooterComponent={renderFooter}
             renderItem={({ item }: { item: Product }) => (
               <ProductContainer>
-                <TouchableOpacity onPress={() => {onProductDetail(item.id)}}>
+                <Button onPress={() => {onProductDetail(item.id)}}>
                   <Image
                     source={{ uri: item.img }}
                   />
-                </TouchableOpacity>
+                </Button>
                 <Typography>{item.name}</Typography>
               </ProductContainer>
             )
