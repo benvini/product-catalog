@@ -29,11 +29,11 @@ const Input = styled.TextInput`
     width: 200px;
     margin-bottom: 8px;
     margin-top: 16px;
-    color: ${({theme}) => (theme.palette.backgroundColor === dark.backgroundColor ? 'black' : 'white')};
+    color: ${({ theme }) => (theme.palette.backgroundColor === dark.backgroundColor ? 'black' : 'white')};
 `
 
 const FlatList = styled.FlatList`
-    background-color: ${({theme}) => theme.palette.backgroundColor === dark.backgroundColor ? 'blue' : 'green'};
+    background-color: ${({ theme }) => theme.palette.backgroundColor === dark.backgroundColor ? 'blue' : 'green'};
     border-radius: 4px;
     width: 80%;
 `
@@ -61,15 +61,11 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
   const dispatch = useDispatch();
   const products = useSelector((state: AddProductState) => state.products);
   const isLastPage = useSelector((state: AddProductState) => state.isLastPage);
-  const {navigation} = props;
+  const { navigation } = props;
 
   useEffect(() => { // fetch first 10 products on initial render
     onAddProducts();
   }, []);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, [products]);
 
   const onAddProducts = useCallback(async () => {
     if (isLastPage) {
@@ -77,15 +73,15 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
     }
     setIsLoading(true);
     const productsLength = products.length;
- try{
-    const fetchedProducts = await axios.get(apiHost, {
-      params: { start: productsLength, end: (productsLength + 10) }
-    });
-    setIsLoading(false);
-    dispatch(addProducts(fetchedProducts.data));
- }
+    try {
+      const fetchedProducts = await axios.get(apiHost, {
+        params: { start: productsLength, end: (productsLength + 10) }
+      });
+      setIsLoading(false);
+      dispatch(addProducts(fetchedProducts.data));
+    }
     catch (e) {
-      console.error('err', e); 
+      console.error('err', e);
     }
   }, [addProducts, products]);
 
@@ -93,30 +89,34 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
     navigation.navigate('ProductDetail', { id })
   }, [])
 
-  const renderFooter = useCallback(() => {    
+  const renderFooter = useCallback(() => {
     if (!isLoading) return null
-  
+
     return (
-        <Spinner height={150}/>
+      <Spinner/>
     )
   }, [isLoading])
 
   return (
     <Container>
-      <Input
+      {isLoading && !products.length ?
+        <Spinner /> : null
+      }
+      {products.length ?
+        <>
+          <Input
             value={inputText}
             onChangeText={setInputText}
           />
-      {products.length ? 
           <FlatList
             data={products}
             vertical={false}
             onEndReached={onAddProducts}
-            contentContainerStyle={{paddingBottom: 12, paddingTop: 12}}
+            contentContainerStyle={{ paddingBottom: 12, paddingTop: 12 }}
             ListFooterComponent={renderFooter}
             renderItem={({ item }: { item: Product }) => (
               <ProductContainer>
-                <Button onPress={() => {onProductDetail(item.id)}}>
+                <Button onPress={() => { onProductDetail(item.id) }}>
                   <Image
                     source={{ uri: item.img }}
                   />
@@ -127,10 +127,11 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
             }
             keyExtractor={(item, index) => index.toString()}
           />
+        </>
         :
         <Typography>Loading products...</Typography>
       }
-      </Container>
+    </Container>
   );
 };
 
