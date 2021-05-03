@@ -16,7 +16,7 @@ const defaultNavOptions: StackNavigationOptions = {
 };
 
 const opacityTransition: object = {
-  gestureDirection: 'horizontal', // we will swipe right if we want to close the screen;  
+  gestureDirection: 'horizontal',  
   transitionSpec: {
     open: {
       animation: 'timing',
@@ -24,14 +24,14 @@ const opacityTransition: object = {
     close: {
       animation: 'timing',
       config: {
-        duration: 300,
+        duration: 600,
       },
     },
   },
   cardStyleInterpolator: ({ current } : {current: {progress: number}}) => ({
     cardStyle: {
       opacity: current.progress,
-    }, // updates the opacity depending on the transition progress value of the current screen
+    }, 
   }),
 };
 
