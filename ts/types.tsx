@@ -12,13 +12,12 @@ export interface Product {
     price: number;
 }
 
-export interface AddProductAction extends AnyAction {
+export interface AddProductsAction extends AnyAction {
     products: Product[];
     type: string;
 }
 
-export interface AddProductState {
-    error: boolean;
+export interface ProductState {
     products: Product[];
     isLastPage: boolean;
 }

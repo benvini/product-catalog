@@ -1,13 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
-import {AddProductAction, AddProductState} from '../../types';
+import {AddProductsAction, ProductState} from '../../types';
 
 const initialState = {
   products: [],
-  error: false,
   isLastPage: false
 };
 
-const productsReducer = (state: AddProductState = initialState, action: AddProductAction) => {
+const productsReducer = (state: ProductState = initialState, action: AddProductsAction) => {
   switch (action.type) {
     case actionTypes.ADD_PRODUCTS: return addProducts(state, action);
     default:
@@ -15,7 +14,7 @@ const productsReducer = (state: AddProductState = initialState, action: AddProdu
   }
 };
 
-const addProducts = (state: AddProductState, action: AddProductAction) => {  
+const addProducts = (state: ProductState, action: AddProductsAction) => {  
   if (action.isLastPage) {
     return { ...state, products: [...state.products, ...action.products], isLastPage: true};
   }

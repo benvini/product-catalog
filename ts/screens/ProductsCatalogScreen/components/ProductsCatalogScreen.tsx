@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import axios from 'axios';
 
-
 import Spinner from '../../../shared/components/Spinner';
 import { Typography } from '../../../shared/components';
 import { addProducts } from '../../../store/actions/products';
-import { Product, AddProductState } from '../../../types';
+import { Product, ProductState } from '../../../types';
 import dark from '../../../shared/theme/dark';
 import { apiHost } from '../../../../bin/config';
 
@@ -20,16 +19,6 @@ const ProductContainer = styled.View`
     justify-content: center;
     align-items: center;
     padding-bottom: 8px;
-`
-
-const Input = styled.TextInput`
-    padding: 4px;
-    border: 1px solid #ccc;
-    height: 40px;
-    width: 200px;
-    margin-bottom: 8px;
-    margin-top: 16px;
-    color: ${({ theme }) => (theme.palette.backgroundColor === dark.backgroundColor ? 'black' : 'white')};
 `
 
 const FlatList = styled.FlatList`
@@ -57,10 +46,9 @@ interface Props {
 
 const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [inputText, setInputText] = useState('');
   const dispatch = useDispatch();
-  const products = useSelector((state: AddProductState) => state.products);
-  const isLastPage = useSelector((state: AddProductState) => state.isLastPage);
+  const products = useSelector((state: ProductState) => state.products);
+  const isLastPage = useSelector((state: ProductState) => state.isLastPage);
   const { navigation } = props;
 
   useEffect(() => { // fetch first 10 products on initial render
@@ -103,11 +91,6 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
         <Spinner /> : null
       }
       {products.length ?
-        <>
-          <Input
-            value={inputText}
-            onChangeText={setInputText}
-          />
           <FlatList
             data={products}
             vertical={false}
@@ -127,9 +110,8 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
             }
             keyExtractor={(item, index) => index.toString()}
           />
-        </>
         :
-        <Typography>Loading products...</Typography>
+        null
       }
     </Container>
   );
