@@ -85,31 +85,31 @@ const ProductsCatalogScreen: FunctionComponent = (props) => {
   };
 
   return (
-      <Screen>
-        {products ?
-          <Card margin={20} padding={10} alignItems="center">
-            <FlatList
-              data={products}
-              renderItem={({ item }: { item: Product }) => (
-                <ProductContainer>
-                  <TouchableOpacity onPress={() => {props.navigation.navigate('ProductDetail', {id: item.id})}}>
+    <Screen>
+      {products ?
+        <Card margin={20} padding={10} alignItems="center">
+          <FlatList
+            data={products}
+            renderItem={({ item }: { item: Product }) => (
+              <ProductContainer>
+                <TouchableOpacity onPress={() => { props.navigation.navigate('ProductDetail', { id: item.id }) }}>
                   <Image
-                    
+
                     source={{ uri: item.img }}
                   />
-                  </TouchableOpacity>
-                  <Typography>{item.name}</Typography>
-                </ProductContainer>
-                )
-              }
-              keyExtractor={(item, index) => index.toString()}
-              ListFooterComponent={loadMoreBtnWithActivityIndicator}
-            />
-          </Card>
-          :
-          <Typography>Loading products...</Typography>
-        }
-      </Screen>
+                </TouchableOpacity>
+                <Typography>{item.name}</Typography>
+              </ProductContainer>
+            )
+            }
+            keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={loadMoreBtnWithActivityIndicator}
+          />
+        </Card>
+        :
+        <Typography>Loading products...</Typography>
+      }
+    </Screen>
   );
 };
 

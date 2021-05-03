@@ -38,13 +38,13 @@ const ProductDetailScreen: FunctionComponent = () => {
     const route = useRoute();
     const routeId = route.params.id || 0;
     useEffect(() => {
-            try {
-                axios.get(apiHost + routeId, { params: { id: routeId } }).then(fetchedProduct => {
-                    console.log('fetchedProduct', fetchedProduct.data);
-                    setProduct(fetchedProduct.data);
-                });
-            }
-            catch(err) {
+        try {
+            axios.get(apiHost + routeId, { params: { id: routeId } }).then(fetchedProduct => {
+                console.log('fetchedProduct', fetchedProduct.data);
+                setProduct(fetchedProduct.data);
+            });
+        }
+        catch (err) {
             console.error(err);
         }
     }, []);
@@ -53,7 +53,7 @@ const ProductDetailScreen: FunctionComponent = () => {
         const { name, img, categoryName, manufacturerName, price, isNatran, isSugar, isShumanRavuy } = product as Product;
         return (
             <Card margin={20} padding={10} alignItems="center">
-                <Image source={{ uri: img }}/>
+                <Image source={{ uri: img }} />
                 <Typography>{name}</Typography>
                 <Typography>{categoryName}</Typography>
                 <Typography>{manufacturerName}</Typography>
@@ -70,7 +70,7 @@ const ProductDetailScreen: FunctionComponent = () => {
         <Screen>
             { product ?
                 renderProduct()
-                : <Typography>Unable fetch product. Please try in a few minutes.</Typography>
+                : <Typography>Unable fetch product. Please try again in a few minutes.</Typography>
             }
         </Screen>
     )
