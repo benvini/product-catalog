@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
-import { Platform, SafeAreaView, Button, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { Platform } from 'react-native';
 
 import ProductDetailScreen from '../screens/ProductDetailScreen/ProductDetailScreen';
 import { ProductsCatalogScreen } from '../screens/ProductsCatalogScreen/components';
@@ -16,11 +15,31 @@ const defaultNavOptions: StackNavigationOptions = {
   }
 };
 
+const opacityTransition: object = {
+  gestureDirection: 'horizontal', // we will swipe right if we want to close the screen;  
+  transitionSpec: {
+    open: {
+      animation: 'timing',
+    },
+    close: {
+      animation: 'timing',
+      config: {
+        duration: 300,
+      },
+    },
+  },
+  cardStyleInterpolator: ({ current } : {current: {progress: number}}) => ({
+    cardStyle: {
+      opacity: current.progress,
+    }, // updates the opacity depending on the transition progress value of the current screen
+  }),
+};
+
 const ProductsStackNavigator = createStackNavigator();
 
 const ProductsNavigator = () => {
   return (
-    <ProductsStackNavigator.Navigator screenOptions={defaultNavOptions}>
+    <ProductsStackNavigator.Navigator screenOptions={{...defaultNavOptions,...opacityTransition}}>
       <ProductsStackNavigator.Screen
         name="ProductsCatalog"
         component={ProductsCatalogScreen}
