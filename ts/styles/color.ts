@@ -1,0 +1,1 @@
+export const PRIMARY = '#C2185B';

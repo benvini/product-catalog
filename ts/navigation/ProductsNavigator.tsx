@@ -4,12 +4,13 @@ import { Platform } from 'react-native';
 
 import ProductDetailScreen from '../screens/ProductDetailScreen/ProductDetailScreen';
 import { ProductsCatalogScreen } from '../screens/ProductsCatalogScreen/components';
+import {PRIMARY} from '../styles/color';
 
 const defaultNavOptions: StackNavigationOptions = {
   headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? '#C2185B' : ''
+    backgroundColor: Platform.OS === 'android' ? PRIMARY : 'white'
   },
-  headerTintColor: Platform.OS === 'android' ? 'white' : '#C2185B',
+  headerTintColor: Platform.OS === 'android' ? 'white' : PRIMARY,
   headerTitleStyle: {
     alignSelf: 'center'
   }

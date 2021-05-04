@@ -13,7 +13,6 @@ const Image = styled.Image`
     width: 84px;
     height: 42px;
     border-radius: 4px;
-    background-color: red;
     margin-right: 10px;
     margin-left: 10px;
 `
@@ -22,7 +21,7 @@ const ProductDetailScreen: FunctionComponent = () => {
     const [product, setProduct] = useState({});
 
     const route = useRoute();
-    const routeId = route.params.id || 0; 
+    const routeId = route.params.id; 
     useEffect(() => {
         try {
             axios.get(apiHost + routeId, { params: { id: routeId } }).then(fetchedProduct => {

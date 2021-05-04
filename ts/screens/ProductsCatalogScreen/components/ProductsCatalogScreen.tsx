@@ -9,6 +9,7 @@ import { addProducts } from '../../../store/actions/products';
 import { Product, ProductState } from '../../../types';
 import dark from '../../../shared/theme/dark';
 import { apiHost } from '../../../../bin/config';
+import {PRIMARY} from '../../../styles/color';
 
 const Container = styled.SafeAreaView`
   align-items: center;
@@ -22,8 +23,9 @@ const ProductContainer = styled.View`
 `
 
 const FlatList = styled.FlatList`
-    background-color: ${({ theme }) => theme.palette.backgroundColor === dark.backgroundColor ? 'blue' : 'green'};
+    background-color: ${PRIMARY};
     border-radius: 4px;
+    margin-top: 12px;
     width: 80%;
 `
 
@@ -31,7 +33,6 @@ const Image = styled.Image`
     width: 120px;
     height: 60px;
     border-radius: 4px;
-    background-color: red;
     margin-right: 10px;
     margin-left: 10px;
 `
