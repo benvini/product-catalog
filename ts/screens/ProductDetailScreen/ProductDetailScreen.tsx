@@ -25,7 +25,6 @@ const ProductDetailScreen: FunctionComponent = () => {
     useEffect(() => {
         try {
             axios.get(apiHost + routeId, { params: { id: routeId } }).then(fetchedProduct => {
-                console.log('fetchedProduct', fetchedProduct.data);
                 setProduct(fetchedProduct.data);
             });
         }
