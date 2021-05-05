@@ -9,13 +9,13 @@ import { loadTheme } from './ts/shared/theme';
 import store from './ts/store/store';
 
 const App = () => {
-  const colorScheme = useColorScheme();  
+  const colorScheme = useColorScheme();
   const theme = loadTheme(colorScheme || 'light');
 
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <AppNavigator/>
+        <AppNavigator />
       </ThemeProvider>
     </Provider>
   );

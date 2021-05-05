@@ -15,6 +15,16 @@ export interface Product {
 export interface AddProductsAction extends AnyAction {
     products: Product[];
     type: string;
+    isLastPage: boolean;
+}
+
+export interface SetProductsAction extends AnyAction {
+    products: Product[];
+    type: string;
+}
+
+export interface EmptyProductsAction extends AnyAction {
+    type: string;
 }
 
 export interface ProductState {

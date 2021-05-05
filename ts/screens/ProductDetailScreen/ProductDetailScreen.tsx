@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { useRoute } from '@react-navigation/native';
-import axios from 'axios';
+import { get, isEmpty } from 'lodash';
 
-import { apiHost } from '../../../bin/config';
 import Card from '../../shared/components/Card';
 import { Screen, Typography } from '../../shared/components';
 import { Product } from '../../types';
+import { getProductById } from '../../shared/utils/api';
+import Spinner from '../../shared/components/Spinner';
 
 
 const Image = styled.Image`
@@ -19,32 +20,43 @@ const Image = styled.Image`
 
 const ProductDetailScreen: FunctionComponent = () => {
     const [product, setProduct] = useState({});
-
+    const [isLoading, setIsLoading] = useState(false);
     const route = useRoute();
-    const routeId = route.params.id; 
+
     useEffect(() => {
+        const id = get(route.params, 'id', -1);
+        if (id === -1) {
+            console.error('Bad input. Could not get id.')
+        }
+        setIsLoading(true);
+
         try {
-            axios.get(apiHost + routeId, { params: { id: routeId } }).then(fetchedProduct => {
+            const getProductByIdAsync = async () => {
+                const fetchedProduct = await getProductById(id);                
                 setProduct(fetchedProduct.data);
-            });
+                setIsLoading(false);
+            }
+            getProductByIdAsync();
         }
+
         catch (err) {
-            console.error(err);
-        }
-    }, []);
+            console.log(err);
+            setIsLoading(false);
+        }}, []);
 
     const renderProduct = useCallback(() => {
         const { name, img, categoryName, manufacturerName, price, isNatran, isSugar, isShumanRavuy } = product as Product;
+            //TODO: move hebrew strings to locales/he and use i18n package
         return (
             <Card margin={20} padding={10} alignItems="center">
                 <Image source={{ uri: img }} />
                 <Typography>{name}</Typography>
                 <Typography>{categoryName}</Typography>
                 <Typography>{manufacturerName}</Typography>
-                <Typography>Price: {price}</Typography>
-                {isSugar && <Typography>Sugar</Typography>}
-                {isNatran && <Typography>Natran</Typography>}
-                {isShumanRavuy && <Typography>Saturated fat</Typography>}
+                <Typography>מחיר: {price} שקל</Typography> 
+                {isSugar && <Typography>סוכר בכמות גבוהה</Typography>}
+                {isNatran && <Typography>נתרן בכמות גבוהה</Typography>}
+                {isShumanRavuy && <Typography>שומן רווי בכמות גבוהה</Typography>}
             </Card>
         );
 
@@ -52,9 +64,13 @@ const ProductDetailScreen: FunctionComponent = () => {
 
     return (
         <Screen>
-            { product ?
-                renderProduct()
-                : <Typography>Unable fetch product. Please try again in a few minutes.</Typography>
+            {
+                isLoading ? <Spinner /> : null
+            }
+            {
+                !isEmpty(product) ?
+                    renderProduct()
+                    : <Typography>Unable fetch product. Please try again in a few minutes.</Typography>
             }
         </Screen>
     )
