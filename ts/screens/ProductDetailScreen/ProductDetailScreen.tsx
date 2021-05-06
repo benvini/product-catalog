@@ -46,7 +46,7 @@ const ProductDetailScreen: FunctionComponent = () => {
 
     const renderProduct = useCallback(() => {
         const { name, img, categoryName, manufacturerName, price, isNatran, isSugar, isShumanRavuy } = product as Product;
-            //TODO: move hebrew strings to locales/he and use i18n package
+            //@TODO: move hebrew strings to locales/he and use i18n package
         return (
             <Card margin={20} padding={10} alignItems="center">
                 <Image source={{ uri: img }} />

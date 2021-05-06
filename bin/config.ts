@@ -1,7 +1,7 @@
 import {Platform} from 'react-native';
 
 const appEnvironments = {
-    local: 'http://localhost:3000'
+    local: 'http://localhost:3000/'
 };
 
 if (Platform.OS === 'android') {
@@ -13,4 +13,3 @@ const apiHost = appEnvironments['local'];
 export {
     apiHost
 };
-  
