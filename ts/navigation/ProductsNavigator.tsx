@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 
 import ProductDetailScreen from '../screens/ProductDetailScreen/ProductDetailScreen';
 import { ProductsCatalogScreen } from '../screens/ProductsCatalogScreen/components';
-import {PRIMARY} from '../styles/color';
+import { PRIMARY } from '../styles/color';
 
 const defaultNavOptions: StackNavigationOptions = {
   headerStyle: {
@@ -13,11 +13,15 @@ const defaultNavOptions: StackNavigationOptions = {
   headerTintColor: Platform.OS === 'android' ? 'white' : PRIMARY,
   headerTitleStyle: {
     alignSelf: 'center'
-  }
+  },
+  headerTitleContainerStyle: {
+    left: 0
+  },
+  headerBackTitle: ''
 };
 
 const opacityTransition: object = {
-  gestureDirection: 'horizontal',  
+  gestureDirection: 'horizontal',
   transitionSpec: {
     open: {
       animation: 'timing',
@@ -29,10 +33,10 @@ const opacityTransition: object = {
       },
     },
   },
-  cardStyleInterpolator: ({ current } : {current: {progress: number}}) => ({
+  cardStyleInterpolator: ({ current }: { current: { progress: number } }) => ({
     cardStyle: {
       opacity: current.progress,
-    }, 
+    },
   }),
 };
 
@@ -40,7 +44,7 @@ const ProductsStackNavigator = createStackNavigator();
 
 const ProductsNavigator = () => {
   return (
-    <ProductsStackNavigator.Navigator screenOptions={{...defaultNavOptions,...opacityTransition}}>
+    <ProductsStackNavigator.Navigator screenOptions={{ ...defaultNavOptions, ...opacityTransition }}>
       <ProductsStackNavigator.Screen
         name="ProductsCatalog"
         component={ProductsCatalogScreen}
