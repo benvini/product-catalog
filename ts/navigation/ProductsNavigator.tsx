@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
-import { Platform } from 'react-native';
 
 import ProductDetailScreen from '../screens/ProductDetailScreen/ProductDetailScreen';
 import { ProductsCatalogScreen } from '../screens/ProductsCatalogScreen/components';
@@ -8,9 +7,9 @@ import { PRIMARY } from '../styles/color';
 
 const defaultNavOptions: StackNavigationOptions = {
   headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? PRIMARY : 'white'
+    backgroundColor: PRIMARY
   },
-  headerTintColor: Platform.OS === 'android' ? 'white' : PRIMARY,
+  headerTintColor: 'white',
   headerTitleStyle: {
     alignSelf: 'center'
   },
