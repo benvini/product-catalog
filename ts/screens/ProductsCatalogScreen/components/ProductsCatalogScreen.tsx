@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { isEmpty } from 'lodash';
@@ -51,17 +52,13 @@ const Button = styled.TouchableOpacity`
     border-radius: 4px;
 `;
 
-interface Props {
-  navigation: any
-}
-
-const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
+const ProductsCatalogScreen: FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [inputText, setInputText] = useState('');
   const dispatch = useDispatch();
   const products = useSelector((state: ProductState) => state.products);
   const isLastPage = useSelector((state: ProductState) => state.isLastPage);
-  const { navigation } = props;
+  const navigation = useNavigation();
 
   useEffect(() => { // fetch first 10 products on initial render
     onAddProducts();
@@ -87,7 +84,7 @@ const ProductsCatalogScreen: FunctionComponent<Props> = (props) => {
     }
   }, []);
 
-  const onAddProducts = useCallback(async () => { 
+  const onAddProducts = useCallback(async () => {
     if (isLastPage || !isEmpty(inputText)) {
       return;
     }
