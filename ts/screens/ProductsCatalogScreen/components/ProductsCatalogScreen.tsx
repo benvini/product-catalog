@@ -110,10 +110,6 @@ const ProductsCatalogScreen: FunctionComponent = () => {
     }
   }, [addProducts, products]);
 
-  const onProductDetail = useCallback((id) => {
-    navigation.navigate('ProductDetail', { id })
-  }, [])
-
   const renderFooter = useCallback(() => { // spinner for loading products in paging FlatList
     if (!isLoading) return null
 
