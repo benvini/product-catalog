@@ -49,11 +49,11 @@ const ProductDetailScreen: FunctionComponent = () => {
             //@TODO: move hebrew strings to locales/he and use i18n package
         return (
             <Card margin={20} padding={10} alignItems="center">
-                <Image source={{ uri: img }} />
-                <Typography>{name}</Typography>
-                <Typography>{categoryName}</Typography>
-                <Typography>{manufacturerName}</Typography>
-                <Typography>מחיר: {price} שקל</Typography> 
+                {img && <Image source={{ uri: img }} />}
+                {name && <Typography>{name}</Typography>}
+                {categoryName && <Typography>{categoryName}</Typography>}
+                {manufacturerName && <Typography>{manufacturerName}</Typography>}
+                {price && <Typography>מחיר: {price} שקל</Typography> }
                 {isSugar && <Typography>סוכר בכמות גבוהה</Typography>}
                 {isNatran && <Typography>נתרן בכמות גבוהה</Typography>}
                 {isShumanRavuy && <Typography>שומן רווי בכמות גבוהה</Typography>}
