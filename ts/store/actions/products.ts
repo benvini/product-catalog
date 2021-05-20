@@ -4,6 +4,7 @@ import {Dispatch} from 'redux';
 import {apiHost} from '../../../bin/config';
 import {ADD_PRODUCTS, SET_FILTERED_PRODUCTS, EMPTY_PRODUCTS} from './actionTypes';
 import {Product} from '../../types';
+import {MAX_PRODUCTS_AMOUNT} from '../../constants/constants';
 
 export const addProducts = (products: Product[]) => async (
   dispatch: Dispatch,
@@ -11,7 +12,7 @@ export const addProducts = (products: Product[]) => async (
   let isLastPage = false;
 
   try {
-    if (products && products.length && products.length < 10) {
+    if (products && products.length && products.length < MAX_PRODUCTS_AMOUNT) {
       isLastPage = true;
     }
 

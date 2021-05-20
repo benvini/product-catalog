@@ -1,9 +1,11 @@
 import axios from 'axios';
+
 import {apiHost} from '../../../bin/config';
+import {MAX_PRODUCTS_AMOUNT} from '../../constants/constants';
 
 export const getProducts = (productsLength: number) => {
   return axios.get(apiHost, {
-    params: {start: productsLength, end: productsLength + 10},
+    params: {start: productsLength, end: productsLength + MAX_PRODUCTS_AMOUNT},
   });
 };
 
