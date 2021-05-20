@@ -8,6 +8,7 @@ import { Screen, Typography } from '../../shared/components';
 import { Product } from '../../types';
 import { getProductById } from '../../shared/utils/api';
 import Spinner from '../../shared/components/Spinner';
+import { Alert } from 'react-native';
 
 
 const Image = styled.Image`
@@ -42,6 +43,10 @@ const ProductDetailScreen: FunctionComponent = () => {
         catch (err) {
             console.log(err);
             setIsLoading(false);
+            Alert.alert(
+                "Something went wrong",
+                "Couldn't fetch products."
+            );
         }}, []);
 
     const renderProduct = useCallback(() => {

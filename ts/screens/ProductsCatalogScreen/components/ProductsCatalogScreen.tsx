@@ -10,6 +10,7 @@ import { addProducts, setFilteredProducts, emptyProducts } from '../../../store/
 import { Product, ProductState } from '../../../types';
 import { PRIMARY } from '../../../styles/color';
 import { getProducts, getProductsByText } from '../../../shared/utils/api';
+import { Alert } from 'react-native';
 
 const Container = styled.SafeAreaView`
   align-items: center;
@@ -76,6 +77,10 @@ const ProductsCatalogScreen: FunctionComponent = () => {
       catch (err) {
         console.error(err.message);
         setIsLoading(false);
+        Alert.alert(
+          "Something went wrong",
+          "Couldn't fetch products."
+        );
       }
     }
     if (userInput === '') { // when cleaning TextInput - empty products list and fetch again
@@ -98,6 +103,10 @@ const ProductsCatalogScreen: FunctionComponent = () => {
     catch (e) {
       console.error('err', e);
       setIsLoading(false);
+      Alert.alert(
+        "Something went wrong",
+        "Couldn't fetch products."
+      );
     }
   }, [addProducts, products]);
 
