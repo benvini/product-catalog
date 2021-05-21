@@ -5,22 +5,16 @@ import styled from 'styled-components/native';
 import { isEmpty } from 'lodash';
 
 import Spinner from '../../../shared/components/Spinner';
-import { Typography } from '../../../shared/components';
 import { addProducts, setFilteredProducts, emptyProducts } from '../../../store/actions/products';
 import { Product, ProductState } from '../../../types';
 import { PRIMARY } from '../../../styles/color';
 import { getProducts, getProductsByText } from '../../../shared/utils/api';
 import { Alert } from 'react-native';
+import FullProduct from '../../../shared/components/FullProduct';
 
 const Container = styled.SafeAreaView`
   align-items: center;
   flex: 1;
-`
-
-const ProductContainer = styled.View`
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 8px;
 `
 
 const Input = styled.TextInput`
@@ -39,19 +33,6 @@ const FlatList = styled.FlatList`
     margin-top: 12px;
     width: 80%;
 `
-
-const Image = styled.Image`
-    width: 120px;
-    height: 60px;
-    border-radius: 4px;
-    margin-right: 10px;
-    margin-left: 10px;
-`
-
-const Button = styled.TouchableOpacity`
-    padding: 8px;
-    border-radius: 4px;
-`;
 
 const ProductsCatalogScreen: FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -135,14 +116,7 @@ const ProductsCatalogScreen: FunctionComponent = () => {
           contentContainerStyle={{ paddingBottom: 12, paddingTop: 12 }}
           ListFooterComponent={renderFooter}
           renderItem={({ item }: { item: Product }) => (
-            <ProductContainer>
-              <Button onPress={() => { onProductDetail(item.id) }}>
-                <Image
-                  source={{ uri: item.img }}
-                />
-              </Button>
-              <Typography>{item.name}</Typography>
-            </ProductContainer>
+            <FullProduct item={item}/>
           )
           }
           keyExtractor={(item, index) => index.toString()}

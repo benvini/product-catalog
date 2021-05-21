@@ -1,9 +1,13 @@
-import { FunctionComponent, useCallback } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 
 import { Product } from '../../types';
-import { Typography } from './';
+import { Typography } from '.';
+
+type Props = {
+    item: Product
+}
 
 const ProductContainer = styled.View`
 justify-content: center;
@@ -24,7 +28,7 @@ padding: 8px;
 border-radius: 4px;
 `;
 
-const Product: FunctionComponent<Product> = (item: Product) => {
+const FullProduct: FunctionComponent<Props> = ({item}: Props) => {
     const navigation = useNavigation();
     const onProductDetail = useCallback((id) => {
         navigation.navigate('ProductDetail', { id })
@@ -43,4 +47,4 @@ const Product: FunctionComponent<Product> = (item: Product) => {
     )
 }
 
-export default Product;
+export default FullProduct;
