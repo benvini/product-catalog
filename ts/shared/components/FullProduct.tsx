@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 
 import { Product } from '../../types';
 import { Typography } from '.';
+import {ROUTES} from '../../constants/constants';
 
 type Props = {
     item: Product
@@ -30,8 +31,9 @@ border-radius: 4px;
 
 const FullProduct: FunctionComponent<Props> = ({item}: Props) => {
     const navigation = useNavigation();
+    const {productDetail} = ROUTES;
     const onProductDetail = useCallback((id) => {
-        navigation.navigate('ProductDetail', { id })
+        navigation.navigate(productDetail, { id })
       }, [])    
     const {id, img, name} = item; 
 

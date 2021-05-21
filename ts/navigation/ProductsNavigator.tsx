@@ -4,6 +4,7 @@ import { createStackNavigator, StackNavigationOptions } from '@react-navigation/
 import ProductDetailScreen from '../screens/ProductDetailScreen/ProductDetailScreen';
 import { ProductsCatalogScreen } from '../screens/ProductsCatalogScreen/components';
 import { PRIMARY } from '../styles/color';
+import {ROUTES} from '../constants/constants';
 
 const defaultNavOptions: StackNavigationOptions = {
   headerStyle: {
@@ -42,14 +43,15 @@ const opacityTransition: object = {
 const ProductsStackNavigator = createStackNavigator();
 
 const ProductsNavigator = () => {
+  const {productsCatalog, productDetail} = ROUTES;
   return (
     <ProductsStackNavigator.Navigator screenOptions={{ ...defaultNavOptions, ...opacityTransition }}>
       <ProductsStackNavigator.Screen
-        name="ProductsCatalog"
+        name={productsCatalog}
         component={ProductsCatalogScreen}
       />
       <ProductsStackNavigator.Screen
-        name="ProductDetail"
+        name={productDetail}
         component={ProductDetailScreen}
       />
     </ProductsStackNavigator.Navigator>
