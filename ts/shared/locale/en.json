@@ -1,0 +1,13 @@
+{
+  "productDetailScreen": {
+    "ils": "ILS",
+    "price": "Price",
+    "highAmountSugar": "High amount of sugar",
+    "highAmountSodium": "High amount of sodium",
+    "highAmountSaturatedFat": "High amount of saturated fat",
+    "unableFetchProduct": "Unable fetch product"
+  },
+  "productCatalogScreen": {
+    "unableFetchProducts": "Unable fetch products"
+  }
+}

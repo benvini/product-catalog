@@ -1,8 +1,10 @@
-import axios from 'axios';
 import {Dispatch} from 'redux';
 
-import {apiHost} from '../../../bin/config';
-import {ADD_PRODUCTS, SET_FILTERED_PRODUCTS, EMPTY_PRODUCTS} from './actionTypes';
+import {
+  ADD_PRODUCTS,
+  SET_FILTERED_PRODUCTS,
+  EMPTY_PRODUCTS,
+} from './actionTypes';
 import {Product} from '../../types';
 import {MAX_PRODUCTS_AMOUNT} from '../../constants/constants';
 
@@ -40,7 +42,7 @@ export const setFilteredProducts = (products: Product[]) => async (
 };
 
 export const emptyProducts = () => {
-    return {
-        type: EMPTY_PRODUCTS
-    };
-}
+  return {
+    type: EMPTY_PRODUCTS,
+  };
+};

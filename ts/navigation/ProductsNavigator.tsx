@@ -1,23 +1,26 @@
 import React from 'react';
-import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 
 import ProductDetailScreen from '../screens/ProductDetailScreen/ProductDetailScreen';
-import { ProductsCatalogScreen } from '../screens/ProductsCatalogScreen/components';
-import { PRIMARY } from '../styles/color';
+import {ProductsCatalogScreen} from '../screens/ProductsCatalogScreen/components';
+import {PRIMARY} from '../styles/color';
 import {ROUTES} from '../constants/constants';
 
 const defaultNavOptions: StackNavigationOptions = {
   headerStyle: {
-    backgroundColor: PRIMARY
+    backgroundColor: PRIMARY,
   },
   headerTintColor: 'white',
   headerTitleStyle: {
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   headerTitleContainerStyle: {
-    left: 0
+    left: 0,
   },
-  headerBackTitle: ''
+  headerBackTitle: '',
 };
 
 const opacityTransition: object = {
@@ -33,7 +36,7 @@ const opacityTransition: object = {
       },
     },
   },
-  cardStyleInterpolator: ({ current }: { current: { progress: number } }) => ({
+  cardStyleInterpolator: ({current}: {current: {progress: number}}) => ({
     cardStyle: {
       opacity: current.progress,
     },
@@ -45,7 +48,8 @@ const ProductsStackNavigator = createStackNavigator();
 const ProductsNavigator = () => {
   const {productsCatalog, productDetail} = ROUTES;
   return (
-    <ProductsStackNavigator.Navigator screenOptions={{ ...defaultNavOptions, ...opacityTransition }}>
+    <ProductsStackNavigator.Navigator
+      screenOptions={{...defaultNavOptions, ...opacityTransition}}>
       <ProductsStackNavigator.Screen
         name={productsCatalog}
         component={ProductsCatalogScreen}

@@ -1,26 +1,29 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import styled from 'styled-components/native';
 
 type Props = {
-    height?: number
-}
+  height?: number;
+};
 
 const Container = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    height: 80px;
-`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+`;
 
-const ActivityIndicator = styled.ActivityIndicator`
-`
+const StyledActivityIndicator = styled.ActivityIndicator.attrs({
+  animating: true,
+  size: 'large',
+  color: '#00ff00',
+})``;
 
 const Spinner: FunctionComponent<Props> = (props: Props) => {
-    return (
-        <Container {...props}>
-            <ActivityIndicator animating size='large' color="#00ff00"/>
-        </Container>
-    )
-}
+  return (
+    <Container {...props}>
+      <StyledActivityIndicator />
+    </Container>
+  );
+};
 
 export default Spinner;

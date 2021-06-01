@@ -1,0 +1,13 @@
+{
+  "productDetailScreen": {
+    "ils": "שקל",
+    "price": "מחיר",
+    "highAmountSugar": "סוכר בכמות גבוהה",
+    "highAmountSodium": "נתרן בכמות גבוהה",
+    "highAmountSaturatedFat": "שומן רווי בכמות גבוהה",
+    "unableFetchProduct": "לא ניתן לטעון את המוצר"
+  },
+  "productCatalogScreen": {
+    "unableFetchProducts": "לא ניתן לטעון את המוצרים"
+  }
+}
